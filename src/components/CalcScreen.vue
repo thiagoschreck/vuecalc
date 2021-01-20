@@ -4,10 +4,8 @@
       <calc-theme-button emoji="🌙" />
     </div>
     <div class="screen__text">
-      <p class="screen__text__history" v-bind:innerHTML="history">
-        {{ history }}
-      </p>
-      <p class="screen__text__result" v-on:btn-click="alert(payload[0])" v-bind:innerHTML="result">{{ result }}</p>
+      <p class="screen__text__history" v-html="calculationsString"></p>
+      <p class="screen__text__result" v-html="resultString"></p>
     </div>
   </div>
 </template>
@@ -19,14 +17,26 @@ export default {
   components: { CalcThemeButton },
   name: "CalcScreen",
   props: {
-    emoji: String,
-  },
-  data: function () {
-    return {
-      history: 0,
-      result: 0,
+    resultString: {
+      type: String,
+      default: ""
+    },
+    calculationsString: {
+      type: String,
+      default: "0"
     }
   },
+  data() {
+    return {
+      history: 0,
+      result: 0
+    };
+  },
+  methods: {
+    updateResult: function() {
+      console.log("b");
+    }
+  }
 };
 </script>
 

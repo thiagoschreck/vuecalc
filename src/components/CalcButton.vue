@@ -1,5 +1,5 @@
 <template>
-  <button class="keyboard__container__button" @click="click">{{ text }}</button>
+  <button class="keyboard__container__button" @click="$emit('btnclick', text)">{{ text }}</button>
 </template>
 
 <script>
@@ -9,12 +9,6 @@ export default {
     text: {
       type: String,
       required: true
-    }
-  },
-  methods: {
-    click() {
-      this.$emit("btn-click", this.text);
-      console.log("a");
     }
   }
 };

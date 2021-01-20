@@ -1,31 +1,31 @@
 <template>
   <div class="keyboard">
     <div class="keyboard__container">
-      <calc-button text="C" />
-      <calc-button text="7" />
-      <calc-button text="4" />
-      <calc-button text="1" />
-      <calc-button text="0" />
+      <calc-button text="C" @btnclick="btnclick" />
+      <calc-button text="7" @btnclick="btnclick" />
+      <calc-button text="4" @btnclick="btnclick" />
+      <calc-button text="1" @btnclick="btnclick" />
+      <calc-button text="0" @btnclick="btnclick" />
     </div>
     <div class="keyboard__container">
-      <calc-button text="+/-" />
-      <calc-button text="8" />
-      <calc-button text="5" />
-      <calc-button text="2" />
+      <calc-button text="+/-" @btnclick="btnclick" />
+      <calc-button text="8" @btnclick="btnclick" />
+      <calc-button text="5" @btnclick="btnclick" />
+      <calc-button text="2" @btnclick="btnclick" />
     </div>
     <div class="keyboard__container">
-      <calc-button text="%" />
-      <calc-button text="9" />
-      <calc-button text="6" />
-      <calc-button text="3" />
-      <calc-button text="." />
+      <calc-button text="%" @btnclick="btnclick" />
+      <calc-button text="9" @btnclick="btnclick" />
+      <calc-button text="6" @btnclick="btnclick" />
+      <calc-button text="3" @btnclick="btnclick" />
+      <calc-button text="." @btnclick="btnclick" />
     </div>
     <div class="keyboard__container">
-      <calc-button text="÷" />
-      <calc-button text="×" />
-      <calc-button text="-" />
-      <calc-button text="+" />
-      <calc-button text="=" />
+      <calc-button text="÷" @btnclick="btnclick" />
+      <calc-button text="×" @btnclick="btnclick" />
+      <calc-button text="-" @btnclick="btnclick" />
+      <calc-button text="+" @btnclick="btnclick" />
+      <calc-button text="=" @btnclick="btnclick" />
     </div>
   </div>
 </template>
@@ -37,6 +37,11 @@ export default {
   name: "CalcKeyboard",
   components: {
     CalcButton
+  },
+  methods: {
+    btnclick(data){
+      this.$emit("keyboardclick", data);
+    }
   }
 };
 </script>
