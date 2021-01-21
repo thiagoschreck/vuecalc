@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" data-theme="light">
     <CalcScreen :resultString="result.toString()" :calculationsString="calculations" />
     <CalcKeyboard @keyboardclick="keyboardclick" />
   </div>
@@ -136,6 +136,11 @@ export default {
 <style lang="scss" scoped>
   #app {
     display: grid;
-    max-width: 70px;
+    width: 100%;
+    max-width: fit-content;
+    padding: 30px;
+    margin: 15px;
+    border-radius: 30px;
+    border: black solid 1px;
   }
 </style>

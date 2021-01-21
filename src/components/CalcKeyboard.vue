@@ -64,13 +64,4 @@ export default {
   width: calc(200% + 15px); //15px is the column gap
 }
 
-.secondary {
-  background-color: rgb(220, 253, 242);
-  color: rgb(117, 191, 166);
-}
-
-.tertiary {
-  background-color: rgb(248, 217, 222);
-  color: rgb(177, 40, 52);
-}
 </style>

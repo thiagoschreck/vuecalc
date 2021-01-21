@@ -53,7 +53,6 @@ export default {
     padding-bottom: 50px;
   }
   &__text {
-    // display: flex;
     & input {
       display: block;
       width: 100%;
