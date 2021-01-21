@@ -1,31 +1,31 @@
 <template>
   <div class="keyboard">
     <div class="keyboard__container">
-      <calc-button text="C" @btnclick="btnclick" />
+      <calc-button class="secondary" text="C" @btnclick="btnclick" />
       <calc-button text="7" @btnclick="btnclick" />
       <calc-button text="4" @btnclick="btnclick" />
       <calc-button text="1" @btnclick="btnclick" />
-      <calc-button text="0" @btnclick="btnclick" />
+      <calc-button class="long" text="0" @btnclick="btnclick" />
     </div>
     <div class="keyboard__container">
-      <calc-button text="+/-" @btnclick="btnclick" />
+      <calc-button class="secondary" text="+/-" @btnclick="btnclick" />
       <calc-button text="8" @btnclick="btnclick" />
       <calc-button text="5" @btnclick="btnclick" />
       <calc-button text="2" @btnclick="btnclick" />
     </div>
     <div class="keyboard__container">
-      <calc-button text="%" @btnclick="btnclick" />
+      <calc-button class="secondary" text="%" @btnclick="btnclick" />
       <calc-button text="9" @btnclick="btnclick" />
       <calc-button text="6" @btnclick="btnclick" />
       <calc-button text="3" @btnclick="btnclick" />
       <calc-button text="." @btnclick="btnclick" />
     </div>
     <div class="keyboard__container">
-      <calc-button text="÷" @btnclick="btnclick" />
-      <calc-button text="×" @btnclick="btnclick" />
-      <calc-button text="-" @btnclick="btnclick" />
-      <calc-button text="+" @btnclick="btnclick" />
-      <calc-button text="=" @btnclick="btnclick" />
+      <calc-button class="secondary" text="÷" @btnclick="btnclick" />
+      <calc-button class="secondary" text="×" @btnclick="btnclick" />
+      <calc-button class="secondary" text="-" @btnclick="btnclick" />
+      <calc-button class="secondary" text="+" @btnclick="btnclick" />
+      <calc-button class="tertiary" text="=" @btnclick="btnclick" />
     </div>
   </div>
 </template>
@@ -48,12 +48,29 @@ export default {
 
 <style lang="scss" scoped>
 .keyboard {
-  width: 50%;
-  margin: 20px 10%;
   display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(5, 125px);
+  user-select: none;
+  gap: 15px;
 
   &__container {
-    grid-row: 1 / 5;
+    display: grid;
+    gap: 15px;
   }
+}
+
+.long {
+  width: calc(200% + 15px); //15px is the column gap
+}
+
+.secondary {
+  background-color: rgb(220, 253, 242);
+  color: rgb(117, 191, 166);
+}
+
+.tertiary {
+  background-color: rgb(248, 217, 222);
+  color: rgb(177, 40, 52);
 }
 </style>

@@ -1,90 +1,34 @@
 <template>
   <div id="app">
-    <!-- <img alt="Vue logo" src="./assets/logo.png" /> -->
-    <!-- <HelloWorld msg="Welcome to Your Vue.js App" /> -->
-    <CalcScreen :resultString="result" :calculationsString="calculations" />
+    <CalcScreen :resultString="result.toString()" :calculationsString="calculations" />
     <CalcKeyboard @keyboardclick="keyboardclick" />
   </div>
 </template>
 
 <script>
-// import HelloWorld from "./components/HelloWorld.vue";
 import CalcKeyboard from "./components/CalcKeyboard.vue";
 import CalcScreen from "./components/CalcScreen.vue";
 
 export default {
   name: "App",
   components: {
-    // HelloWorld
     CalcScreen,
-    CalcKeyboard,
+    CalcKeyboard
   },
   data() {
     return {
       calculations: "0",
-      calculating: false,
-      result: "0",
+      isCalculating: false,
+      canComma: true,
+      canNegate: true,
+      result: "0"
     };
   },
   methods: {
-    separateTerms(input) {
-      let operators = [];
-      for (let i = 0; i < input.length; i++) {
-        if (["+", "-", "×", "÷"].includes(input[i])) {
-          console.log("Pushing operator n" + i + ": " + input[i]); //debug
-          operators.push(input[i]);
-        }
-      }
-
-      input = input.split("+");
-      input = input.join(",");
-      input = input.split("-");
-      input = input.join(",");
-      input = input.split("×");
-      input = input.join(",");
-      input = input.split("÷");
-      input = input.join(",");
-      input = input.split(",");
-
-      if (!input[input.length - 1]) {
-        input.pop();
-        operators.pop();
-      }
-
-      let output = {
-        terms: input,
-        operators: operators,
-      };
-
-      return output;
-    },
-
     calculate(input) {
       let result = 0;
-      let operate = {
-        "+": (a, b) => {
-          return (parseFloat(a) + parseFloat(b)).toString();
-        },
-        "-": (a, b) => {
-          return (parseFloat(a) - parseFloat(b)).toString();
-        },
-        "×": (a, b) => {
-          return (parseFloat(a) * parseFloat(b)).toString();
-        },
-        "÷": (a, b) => {
-          return (parseFloat(a) / parseFloat(b)).toString();
-        },
-      };
-
-      let operations = this.separateTerms(input);
-
-      result += operations.terms[0];
-      for (let i = 1; i < operations.terms.length; i++) {
-        result = operate[operations.operators[i - 1]](
-          result,
-          operations.terms[i]
-        );
-      }
+      input = input.replace(/× /g,"*").replace(/÷ /g,"/");
+      result = eval(input);
       return result;
     },
 
@@ -92,7 +36,9 @@ export default {
       switch (input) {
         case "C": {
           this.calculations = "0";
-          this.calculating = false;
+          this.isCalculating = false;
+          this.canComma = true;
+          this.canNegate = true;
           this.result = "0";
           break;
         }
@@ -100,26 +46,76 @@ export default {
         case "-":
         case "×":
         case "÷": {
-          this.result = this.calculate(this.calculations);
-          if(!this.calculating){
-            this.calculations += " " + input + " ";
-            this.calculating = true;
+          if(!this.canNegate && !this.isCalculating) {
+            this.calculations += ")";
+          }
+          this.canComma = true;
+          this.canNegate = true;
+          if (!this.isCalculating) {
+            if(this.calculations[this.calculations.length - 1] == "."){
+              this.calculations[this.calculations.length - 1] = " " + input + " ";
+            } else {
+              this.calculations += " " + input + " ";
+            }
+            this.isCalculating = true;
+          }
+          else if(this.isCalculating && input === "-" && this.canNegate){
+              this.calculations += "-(";
+              this.canNegate = false;
+              this.isCalculating = true;
+          }
+          else if(this.isCalculating) {
+            this.calculations = this.calculations.split("");
+            this.calculations[(this.calculations.length-2)] = input;
+            this.calculations = this.calculations.join("");
+          }
+          break;
+        }
+        case "%": {
+          if(!this.isCalculating) {
+            if(!this.canNegate) {
+              this.calculations += ")";
+            }
+            this.canNegate = true;
+            this.calculations = "(" + this.calculations + ") ÷ 100";
+            this.result = this.calculate(this.calculations);
+          }
+          break;
+        }
+        case "+/-": {
+          if(!this.isCalculating) {
+            if(!this.canNegate) {
+              this.calculations += ")";
+            }
+            this.canNegate = true;
+            this.calculations = "(-" + this.calculations + ")";
           }
           break;
         }
         case ".": {
-          this.type(".");
+          if(this.canComma && !this.isCalculating){
+            this.calculations += ".";
+            this.canComma = false;
+            }
+          else if(this.canComma && this.isCalculating) {
+            this.calculations += "0.";
+            this.canComma = false;
+          }
           break;
         }
         case "=": {
+          if(!this.canNegate) {
+            this.calculations += ")";
+            this.canNegate = true;
+          }
           this.result = this.calculate(this.calculations);
-          this.calculating = false;
+          this.isCalculating = false;
           break;
         }
         default: {
           if (this.calculations !== "0") {
             this.calculations += input;
-            this.calculating = false;
+            this.isCalculating = false;
           } else {
             this.calculations = input;
           }
@@ -128,8 +124,18 @@ export default {
     },
 
     keyboardclick(data) {
-      this.type(data);
-    },
-  },
-};
+      this.type(data)
+      if(!this.isCalculating){
+        this.result = this.calculate(this.calculations);
+      }
+    }
+  }
+}
 </script>
+
+<style lang="scss" scoped>
+  #app {
+    display: grid;
+    max-width: 70px;
+  }
+</style>

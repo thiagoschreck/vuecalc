@@ -16,13 +16,13 @@ export default {
 
 <style lang="scss" scoped>
 .keyboard__container__button {
-  margin-bottom: 15px;
-  width: 150px;
-  height: 150px;
-
+  border-radius: 30px;
+  border: none;
+  width: 125px;
+  height: 125px;
   font-size: 50px;
-  // &__long {
-
-  // }
+}
+:focus {
+  outline: none;
 }
 </style>

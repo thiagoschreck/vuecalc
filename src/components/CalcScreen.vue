@@ -1,7 +1,7 @@
 <template>
   <div class="screen">
     <div class="screen__topbar">
-      <calc-theme-button emoji="🌙" />
+      <calc-theme-button/>
     </div>
     <div class="screen__text">
       <p class="screen__text__history" v-html="calculationsString"></p>
@@ -35,6 +35,9 @@ export default {
   methods: {
     updateResult: function() {
       console.log("b");
+    },
+    themeclick(bool){
+        this.$emit("updateTheme", bool)
     }
   }
 };
@@ -42,8 +45,10 @@ export default {
 
 <style lang="scss" scoped>
 .screen {
+  font-size: 80px;
+  font-family: 'Roboto', sans-serif;
+  text-align: right;
   width: 100%;
-  padding: 20px 10%;
   &__topbar {
     padding-bottom: 50px;
   }
