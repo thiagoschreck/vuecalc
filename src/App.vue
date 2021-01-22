@@ -1,7 +1,7 @@
 <template>
-  <div id="app" data-theme="light">
-    <CalcScreen :resultString="result.toString()" :calculationsString="calculations" />
-    <CalcKeyboard @keyboardclick="keyboardclick" />
+  <div id="app" :class="{ dark: $darkMode }">
+    <CalcScreen />
+    <CalcKeyboard @keyboardclick="typeEvaluate" />
   </div>
 </template>
 
@@ -13,134 +13,142 @@ export default {
   name: "App",
   components: {
     CalcScreen,
-    CalcKeyboard
+    CalcKeyboard,
   },
   data() {
     return {
-      calculations: "0",
       isCalculating: false,
       canComma: true,
       canNegate: true,
-      result: "0"
     };
   },
   methods: {
-    calculate(input) {
-      let result = 0;
-      input = input.replace(/× /g,"*").replace(/÷ /g,"/");
-      result = eval(input);
-      return result;
+    typeEvaluate(data) {
+      this.type(data);
+      if (!this.isCalculating) {
+        this.$result = this.calculate(this.$operation);
+      }
     },
 
     type(input) {
       switch (input) {
         case "C": {
-          this.calculations = "0";
+          this.$operation = "0";
+          this.$result = "0";
+          this.$focusResult = true;
           this.isCalculating = false;
           this.canComma = true;
           this.canNegate = true;
-          this.result = "0";
           break;
         }
         case "+":
         case "-":
         case "×":
         case "÷": {
-          if(!this.canNegate && !this.isCalculating) {
-            this.calculations += ")";
+          this.$focusResult = false;
+          if (!this.canNegate && !this.isCalculating) {
+            this.$operation += ")";
           }
           this.canComma = true;
           this.canNegate = true;
           if (!this.isCalculating) {
-            if(this.calculations[this.calculations.length - 1] == "."){
-              this.calculations[this.calculations.length - 1] = " " + input + " ";
+            if (this.$operation[this.$operation.length - 1] == ".") {
+              this.$operation[this.$operation.length - 1] = " " + input + " ";
             } else {
-              this.calculations += " " + input + " ";
+              this.$operation += " " + input + " ";
             }
             this.isCalculating = true;
-          }
-          else if(this.isCalculating && input === "-" && this.canNegate){
-              this.calculations += "-(";
-              this.canNegate = false;
-              this.isCalculating = true;
-          }
-          else if(this.isCalculating) {
-            this.calculations = this.calculations.split("");
-            this.calculations[(this.calculations.length-2)] = input;
-            this.calculations = this.calculations.join("");
+          } else if (this.$operation && input === "-" && this.canNegate) {
+            this.$operation += "(-";
+            this.canNegate = false;
+            this.isCalculating = true;
+          } else if (this.isCalculating) {
+            this.$operation = this.$operation.split("");
+            this.$operation[this.$operation.length - 2] = input;
+            this.$operation = this.$operation.join("");
           }
           break;
         }
         case "%": {
-          if(!this.isCalculating) {
-            if(!this.canNegate) {
-              this.calculations += ")";
+          this.$focusResult = false;
+          if (!this.isCalculating) {
+            if (!this.canNegate) {
+              this.$operation += ")";
             }
             this.canNegate = true;
-            this.calculations = "(" + this.calculations + ") ÷ 100";
-            this.result = this.calculate(this.calculations);
+            this.$operation = "(" + this.$operation + ") ÷ 100";
+            this.$result = this.calculate(this.$operation);
           }
           break;
         }
         case "+/-": {
-          if(!this.isCalculating) {
-            if(!this.canNegate) {
-              this.calculations += ")";
+          this.$focusResult = false;
+          if (!this.isCalculating) {
+            if (!this.canNegate) {
+              this.$operation += ")";
             }
             this.canNegate = true;
-            this.calculations = "(-" + this.calculations + ")";
+            this.$operation = "(-" + this.$operation + ")";
           }
           break;
         }
         case ".": {
-          if(this.canComma && !this.isCalculating){
-            this.calculations += ".";
+          this.$focusResult = false;
+          if (this.canComma && !this.isCalculating) {
+            this.$operation += ".";
             this.canComma = false;
-            }
-          else if(this.canComma && this.isCalculating) {
-            this.calculations += "0.";
+          } else if (this.canComma && this.isCalculating) {
+            this.$operation += "0.";
             this.canComma = false;
           }
           break;
         }
         case "=": {
-          if(!this.canNegate) {
-            this.calculations += ")";
+          this.$focusResult = true;
+          if (!this.canNegate) {
+            this.$operation += ")";
             this.canNegate = true;
           }
-          this.result = this.calculate(this.calculations);
+          this.$result = this.calculate(this.$operation);
           this.isCalculating = false;
           break;
         }
         default: {
-          if (this.calculations !== "0") {
-            this.calculations += input;
+          if (this.$operation !== "0") {
+            this.$operation += input;
             this.isCalculating = false;
           } else {
-            this.calculations = input;
+            this.$operation = input;
           }
+          this.$focusResult = false;
         }
       }
     },
 
-    keyboardclick(data) {
-      this.type(data)
-      if(!this.isCalculating){
-        this.result = this.calculate(this.calculations);
-      }
-    }
-  }
-}
+    calculate(input) {
+      let result = 0;
+      input = input.replace(/× /g, "*").replace(/÷ /g, "/");
+      result = eval(input);
+      return result;
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>
+#app {
+  border-radius: 5vw;
+  border: black solid 1px;
+  height: fit-content;
+  margin: 15px;
+  max-width: fit-content;
+  padding: 3vw;
+  width: 100%;
+}
+
+@media (max-width: 768px) {
   #app {
-    display: grid;
-    width: 100%;
-    max-width: fit-content;
-    padding: 30px;
-    margin: 15px;
-    border-radius: 30px;
-    border: black solid 1px;
+    margin: auto;
   }
+}
 </style>

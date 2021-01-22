@@ -1,48 +1,153 @@
 <template>
   <div class="keyboard">
     <div class="keyboard__container">
-      <calc-button class="secondary" text="C" @btnclick="btnclick" />
-      <calc-button text="7" @btnclick="btnclick" />
-      <calc-button text="4" @btnclick="btnclick" />
-      <calc-button text="1" @btnclick="btnclick" />
-      <calc-button class="long" text="0" @btnclick="btnclick" />
+      <button
+        class="keyboard__container__button secondary" 
+        :class="{ dark: $darkMode }"
+        @click="$emit('keyboardclick', 'C')"
+      >
+        C
+      </button>
+      <button
+        class="keyboard__container__button"
+        :class="{ dark: $darkMode }"
+        @click="$emit('keyboardclick', '7')"
+      >
+        7
+      </button>
+      <button
+        class="keyboard__container__button"
+        :class="{ dark: $darkMode }"
+        @click="$emit('keyboardclick', '4')"
+      >
+        4
+      </button>
+      <button
+        class="keyboard__container__button"
+        :class="{ dark: $darkMode }"
+        @click="$emit('keyboardclick', '1')"
+      >
+        1
+      </button>
+      <button
+        class="keyboard__container__button long"
+        :class="{ dark: $darkMode }"
+        @click="$emit('keyboardclick', '0')"
+      >
+        0
+      </button>
     </div>
     <div class="keyboard__container">
-      <calc-button class="secondary" text="+/-" @btnclick="btnclick" />
-      <calc-button text="8" @btnclick="btnclick" />
-      <calc-button text="5" @btnclick="btnclick" />
-      <calc-button text="2" @btnclick="btnclick" />
+      <button
+        class="keyboard__container__button secondary"
+        :class="{ dark: $darkMode }"
+        @click="$emit('keyboardclick', '+/-')"
+      >
+        +/-
+      </button>
+      <button
+        class="keyboard__container__button"
+        :class="{ dark: $darkMode }"
+        @click="$emit('keyboardclick', '8')"
+      >
+        8
+      </button>
+      <button
+        class="keyboard__container__button"
+        :class="{ dark: $darkMode }"
+        @click="$emit('keyboardclick', '5')"
+      >
+        5
+      </button>
+      <button
+        class="keyboard__container__button"
+        :class="{ dark: $darkMode }"
+        @click="$emit('keyboardclick', '2')"
+      >
+        2
+      </button>
     </div>
     <div class="keyboard__container">
-      <calc-button class="secondary" text="%" @btnclick="btnclick" />
-      <calc-button text="9" @btnclick="btnclick" />
-      <calc-button text="6" @btnclick="btnclick" />
-      <calc-button text="3" @btnclick="btnclick" />
-      <calc-button text="." @btnclick="btnclick" />
+      <button
+        class="keyboard__container__button secondary"
+        :class="{ dark: $darkMode }"
+        @click="$emit('keyboardclick', '%')"
+      >
+        %
+      </button>
+      <button
+        class="keyboard__container__button"
+        :class="{ dark: $darkMode }"
+        @click="$emit('keyboardclick', '9')"
+      >
+        9
+      </button>
+      <button
+        class="keyboard__container__button"
+        :class="{ dark: $darkMode }"
+        @click="$emit('keyboardclick', '6')"
+      >
+        6
+      </button>
+      <button
+        class="keyboard__container__button"
+        :class="{ dark: $darkMode }"
+        @click="$emit('keyboardclick', '3')"
+      >
+        3
+      </button>
+      <button
+        class="keyboard__container__button"
+        :class="{ dark: $darkMode }"
+        @click="$emit('keyboardclick', '.')"
+      >
+        .
+      </button>
     </div>
     <div class="keyboard__container">
-      <calc-button class="secondary" text="÷" @btnclick="btnclick" />
-      <calc-button class="secondary" text="×" @btnclick="btnclick" />
-      <calc-button class="secondary" text="-" @btnclick="btnclick" />
-      <calc-button class="secondary" text="+" @btnclick="btnclick" />
-      <calc-button class="tertiary" text="=" @btnclick="btnclick" />
+      <button
+        class="keyboard__container__button secondary"
+        :class="{ dark: $darkMode }"
+        @click="$emit('keyboardclick', '÷')"
+      >
+        ÷
+      </button>
+      <button
+        class="keyboard__container__button secondary"
+        :class="{ dark: $darkMode }"
+        @click="$emit('keyboardclick', '×')"
+      >
+        ×
+      </button>
+      <button
+        class="keyboard__container__button secondary"
+        :class="{ dark: $darkMode }"
+        @click="$emit('keyboardclick', '-')"
+      >
+        -
+      </button>
+      <button
+        class="keyboard__container__button secondary"
+        :class="{ dark: $darkMode }"
+        @click="$emit('keyboardclick', '+')"
+      >
+        +
+      </button>
+      <button
+        class="keyboard__container__button tertiary"
+        :class="{ dark: $darkMode }"
+        @click="$emit('keyboardclick', '=')"
+      >
+        =
+      </button>
     </div>
   </div>
 </template>
 
 <script>
-import CalcButton from "./CalcButton.vue";
-
 export default {
   name: "CalcKeyboard",
-  components: {
-    CalcButton
-  },
-  methods: {
-    btnclick(data){
-      this.$emit("keyboardclick", data);
-    }
-  }
+  methods: {}
 };
 </script>
 
@@ -50,18 +155,38 @@ export default {
 .keyboard {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: repeat(5, 125px);
+  grid-template-rows: repeat(5, 9vw);
+  max-width: 100%;
+  max-height: 100%;
   user-select: none;
-  gap: 15px;
+  gap: 1vw;
 
   &__container {
     display: grid;
-    gap: 15px;
+    gap: 1vw;
+
+    &__button {
+      border-radius: 3vw;
+      border: none;
+      font-size: 3.5vw;
+      height: 9vw;
+      max-height: 100vh;
+      max-width: 100vh;
+      width: 9vw;
+    }
+    :focus {
+      outline: none;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .keyboard {
+    grid-template-rows: repeat(5, 9vw);
   }
 }
 
 .long {
-  width: calc(200% + 15px); //15px is the column gap
+  width: calc(200% + 1vw); //1vw is the column gap
 }
-
 </style>

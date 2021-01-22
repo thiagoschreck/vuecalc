@@ -1,0 +1,84 @@
+$background: white;
+$color: rgb(180, 180, 180);
+$primary-background: #fafafa;
+$primary-text: rgb(82, 82, 82);
+$secondary-background: rgb(220, 253, 242);
+$secondary-text: rgb(117, 191, 166);
+$tertiary-background: rgb(248, 217, 222);
+$tertiary-text: rgb(177, 40, 52);
+
+#app {
+  background-color: $background;
+
+  &.dark {
+    $background: black;
+    background-color: $background;
+  }
+}
+
+.keyboard__container__button {
+  background-color: $primary-background;
+  &:active {
+    background-color: darken($primary-background, 10%);
+  }
+  &.dark {
+    $primary-background: rgb(30, 30, 30);
+    $primary-text: rgb(183, 183, 183);
+    background-color: $primary-background;
+    color: $primary-text;
+    &:active {
+      background-color: lighten($primary-background, 10%);
+    }
+  }
+}
+
+.secondary {
+  background-color: $secondary-background;
+  color: $secondary-text;
+  &:active {
+    background-color: darken($secondary-background, 10%);
+  }
+  &.dark {
+    $secondary-background: rgb(52, 52, 52);
+    $secondary-text: rgb(255, 255, 255);
+    background-color: $secondary-background;
+    color: $secondary-text;
+    &:active {
+      background-color: lighten($secondary-background, 10%);
+    }
+  }
+}
+
+.tertiary {
+  background-color: $tertiary-background;
+  color: $tertiary-text;
+  &:active {
+    background-color: darken($tertiary-background, 10%);
+  }
+  &.dark {
+    $tertiary-background: rgb(109, 109, 109);
+    $tertiary-text: rgb(255, 255, 255);
+    background-color: $tertiary-background;
+    color: $tertiary-text;
+    &:active {
+      background-color: lighten($tertiary-background, 10%);
+    }
+  }
+}
+
+.screen {
+  color: $secondary-text;
+  &.dark {
+    $secondary-text: rgb(255, 255, 255);
+    color: $secondary-text;
+  }
+}
+
+.focused {
+  color: $secondary-text;
+  font-size: 9vw;
+  &.dark {
+    $secondary-text: rgb(255, 255, 255);
+    color: $secondary-text;
+  }
+}
