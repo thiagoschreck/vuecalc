@@ -70,6 +70,9 @@ export default {
       :focus {
         outline: none;
       }
+      :hover {
+        opacity: 0.7;
+      }
     }
   }
 }
