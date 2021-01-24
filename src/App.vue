@@ -137,18 +137,12 @@ export default {
 
 <style lang="scss" scoped>
 #app {
-  border-radius: 5vw;
+  border-radius: 5vh;
   border: black solid 1px;
   height: fit-content;
-  margin: 15px;
+  margin: 2vh auto;
   max-width: fit-content;
-  padding: 3vw;
+  padding: 3vh;
   width: 100%;
-}
-
-@media (max-width: 768px) {
-  #app {
-    margin: auto;
-  }
 }
 </style>

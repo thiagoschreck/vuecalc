@@ -47,25 +47,25 @@ export default {
 .screen {
   color: grey;
   font-family: "Roboto", sans-serif;
-  font-size: 6vw;
-  max-width: 40vw;
+  font-size: 6vh;
+  max-width: 40vh;
   overflow-x: auto scroll;
   overflow-y: hidden;
-  padding-bottom: 3vw;
+  padding-bottom: 3vh;
   text-align: right;
   text-overflow: ellipsis;
   white-space: nowrap;
   width: 100%;
   &__topbar {
-    padding-bottom: 2vw;
+    padding-bottom: 2vh;
     &__themebutton {
       background-color: transparent;
       border: none;
-      font-size: 4vw;
+      font-size: 4vh;
       outline: none;
       & > img {
         -webkit-user-drag: none;
-        max-width: 4vw;
+        max-width: 4vh;
       }
       :focus {
         outline: none;

@@ -155,24 +155,24 @@ export default {
 .keyboard {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: repeat(5, 9vw);
+  grid-template-rows: repeat(5, 9vh);
   max-width: 100%;
   max-height: 100%;
   user-select: none;
-  gap: 1vw;
+  gap: 1vh;
 
   &__container {
     display: grid;
-    gap: 1vw;
+    gap: 1vh;
 
     &__button {
-      border-radius: 3vw;
+      border-radius: 3vh;
       border: none;
-      font-size: 3.5vw;
-      height: 9vw;
+      font-size: 3.5vh;
+      height: 9vh;
       max-height: 100vh;
       max-width: 100vh;
-      width: 9vw;
+      width: 9vh;
     }
     :focus {
       outline: none;
@@ -182,11 +182,11 @@ export default {
 
 @media (max-width: 768px) {
   .keyboard {
-    grid-template-rows: repeat(5, 9vw);
+    grid-template-rows: repeat(5, 9vh);
   }
 }
 
 .long {
-  width: calc(200% + 1vw); //1vw is the column gap
+  width: calc(200% + 1vh); //1vw is the column gap
 }
 </style>
